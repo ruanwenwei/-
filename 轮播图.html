@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body>div{
+            width: 90%;
+            height: 300px;
+            position: relative;
+            margin: 20px auto;
+        }
+        .banner_img{
+            position: absolute;
+        }
+        .banner_img img{
+            width: 100%;
+            height: 300px;
+        }
+        .num{
+            color: black;
+            position: absolute;
+            bottom: 20px;
+            left: 10px;
+        }
+        .num span,.page span{
+            border: 1px solid yellow;
+            padding: 4px 9px;
+            background: yellow;
+        }
+        .active{
+            border-color: red !important;
+        }
+        .page{
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        <div class="banner">
+            <a href="" class="banner_img" style="display:block"><img src="img/libanner.png" alt=""></a>
+            <a href="" class="banner_img" style="display:none"><img src="img/peibanner.jpg" alt=""></a>
+            <a href="" class="banner_img" style="display:none"><img src="img/shabanner.png" alt=""></a>
+            <a href="" class="banner_img" style="display:none"><img src="img/shabanner1.jpg" alt=""></a>
+            <a href="" class="banner_img" style="display:none"><img src="img/toubanner.JPG" alt=""></a>
+        </div>
+        <!-- 轮播序号 -->
+        <div class="num">
+            <span class="active">1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </div>
+        <!-- 上一张和下一张 -->
+        <div class="page">
+            <span class="prve">&lt;</span>
+            <span class="next">&gt;</span>
+        </div>
+
+    </div>
+    <script>
+        // 获取要操作的标签
+        var imgs = document.querySelectorAll('.banner_img');
+        var spans = document.querySelectorAll('.num span');
+        var prveClick  =document.querySelector('.prve');
+        var nextClick  =document.querySelector('.next');
+
+
+        // 定义一个变量来纪录图片
+        var index=0;
+
+        // 纪录前一张图片
+        var prve = imgs[0];
+        // 用来纪录上一个数字
+        var prvenum = spans[0]
+
+        // 定义一个函数来计算索引值变化
+        function showindex(){
+           index=index>=imgs.length-1?0:index+1;
+        //    console.log(index)
+            move()
+        }
+        var img =setInterval(showindex,1000);
+
+    //    轮播图动起来的
+        function move(){  
+            prve.style.display='none';
+            imgs[index].style.display='block';
+          
+            prve=imgs[index]
+
+            prvenum.className='';
+            spans[index].className='active';
+            prvenum = spans[index];
+        }
+        // 下一张
+        nextClick.onclick=function(){
+            clearInterval(img);
+            showindex()
+        }
+        // 上一张
+        prveClick.onclick=function(){
+            clearInterval(img);
+            index = index<=0?imgs.length-1:index-1;
+            move();
+        }
+
+        for(var i=0;i<spans.length;i++){
+            spans[i].index=i;
+            spans[i].onclick=function(){
+                clearInterval(img);
+                index=this.index
+                move()
+            }
+        }
+    </script>
+    
+</body>
+</html>
